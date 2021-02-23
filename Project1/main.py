@@ -4,10 +4,20 @@ if __name__ == '__main__':
     from matplotlib import pyplot as plt
 
     # Load dataset
-    url = "data/breast_cancer_wisconsin_diagnostic_data.csv"
-    dataset = read_csv(url)
-    dataset.dropna(axis="columns", how="any", inplace=True)
+    dataset1 = read_csv("data/breast_cancer_wisconsin_diagnostic_data.csv")
+    dataset1.dropna(axis="columns", how="any", inplace=True)
 
-    # array = dataset.values
-    # x = array[:, :-1]
-    # y = array[:, -1]
+    dataset2 = read_csv("data/red_wine_quality.csv")
+    dataset2.dropna(axis="columns", how="any", inplace=True)
+
+    """
+    Observing the target value column in the dataset
+    """
+    print(dataset1['diagnosis'].unique())
+    print(dataset2['quality'].unique())
+    print(np.sum(dataset1['diagnosis'] == 'M'))
+    print(np.sum(dataset1['diagnosis'] == 'B'))
+    print(dataset2[dataset2['quality'].isin([3])])
+    for i in range(min(dataset2['quality'].unique()), max(dataset2['quality'].unique())+1):
+        print(np.sum(dataset2['quality'] == i))
+
