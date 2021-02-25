@@ -9,3 +9,5 @@ observing dataset with different pandas techniques (unique, isin)
     for wine, quality has the following values [5 6 7 4 8 3] so 3 (10 samples), 4 (53 samples) ~ low quality,
                                                                 5 (681 samples), 6 (638 samples) ~ medium quality
                                                                 7 (199 samples), 8 (18 samples) ~ high quality
+
+added plotting for histogram and density estimation

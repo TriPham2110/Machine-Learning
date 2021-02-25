@@ -22,6 +22,8 @@ if __name__ == '__main__':
         print(np.sum(dataset2['quality'] == i))
     """
     hist = histogram(dataset2['quality'])
-    lower_bounds, histogram_vals = hist.make_histogram(dataset2['quality'], 5, 3, 8)
+    bins = len(dataset2['quality'].unique())-1
+    lower_bounds, histogram_vals = hist.make_histogram(bins)
 
     hist.plot_histogram(lower_bounds, histogram_vals, 'quality', 'samples', 'Histogram of wine quality')
+    hist.plot_pdf(bins)
