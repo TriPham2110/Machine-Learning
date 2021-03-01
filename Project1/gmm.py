@@ -2,6 +2,7 @@
 Ref: https://www.python-course.eu/expectation_maximization_and_gaussian_mixture_models.php
      http://ethen8181.github.io/machine-learning/clustering/GMM/GMM.html#E-Step
      http://www.oranlooney.com/post/ml-from-scratch-part-5-gmm/
+     https://machinelearningmastery.com/scale-machine-learning-data-scratch-python/
 """
 
 import numpy as np
@@ -83,3 +84,21 @@ class gmm:
                 ax0.scatter(mu[0][0], mu[0][1], c='grey', zorder=10, s=100)
                 ax0.scatter(mu[1][0], mu[1][1], c='grey', zorder=10, s=100)
         plt.show()
+
+    @staticmethod
+    def find_minmax(X):
+        minmax = []
+        for i in range(len(X[0])):
+            col_values = [row[i] for row in X]
+            value_min = min(col_values)
+            value_max = max(col_values)
+            minmax.append([value_min, value_max])
+        return minmax
+
+    @staticmethod
+    def normalize(X):
+        minmax = gmm.find_minmax(X)
+        for row in X:
+            for i in range(len(row)):
+                row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])
+        return X

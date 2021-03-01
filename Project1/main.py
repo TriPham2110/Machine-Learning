@@ -34,9 +34,12 @@ if __name__ == '__main__':
     X = dataset1[['texture_mean', 'radius_mean']].values
 
     model = gmm.gmm(n_clusters=2, n_iterations=1)
-    model.train(X)
-    model.plot_contours(X, model.mu, model.sigma, 'Initial clusters')
+
+    normalized_X = model.normalize(X)
+
+    model.train(normalized_X)
+    model.plot_contours(normalized_X, model.mu, model.sigma, 'Initial clusters')
 
     model = gmm.gmm(n_clusters=2, n_iterations=50, seed=4)
-    model.train(X)
-    model.plot_contours(X, model.mu, model.sigma, 'Final clusters')
+    model.train(normalized_X)
+    model.plot_contours(normalized_X, model.mu, model.sigma, 'Final clusters')

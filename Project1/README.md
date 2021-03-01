@@ -40,3 +40,5 @@ http://ethen8181.github.io/machine-learning/clustering/GMM/GMM.html#E-Step
 
 http://www.oranlooney.com/post/ml-from-scratch-part-5-gmm/
 
+https://machinelearningmastery.com/scale-machine-learning-data-scratch-python/
+
