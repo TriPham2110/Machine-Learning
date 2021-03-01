@@ -2,7 +2,8 @@ chose wine and breast dataset; the idea is to cluster the data into their respec
 
 we will be using gaussian mixture model to mainly carry out this observation; maybe adding expectation maximization
 
-currently learning more about GMM https://www.youtube.com/watch?v=DODphRRL79c
+learning more about GMM https://www.youtube.com/watch?v=DODphRRL79c
+                        https://www.youtube.com/watch?v=qMTuMa86NzU
 
 observing dataset with different pandas techniques (unique, isin)
     for breast cancer, diagnosis has either value ['M' 'B'] for malignant (212 samples) or benign (357 samples)
@@ -11,3 +12,5 @@ observing dataset with different pandas techniques (unique, isin)
                                                                 7 (199 samples), 8 (18 samples) ~ high quality
 
 added plotting for histogram and density estimation
+
+added gaussian mixture model and contour plotting

@@ -29,13 +29,14 @@ if __name__ == '__main__':
     hist.plot_histogram(lower_bounds, histogram_vals, 'quality', 'samples', 'Histogram of wine quality')
     hist.plot_pdf(bins)
 
+    # Breast cancer dataset clustered with two attributes texture mean and radius mean
     array = dataset1.values
     X = dataset1[['texture_mean', 'radius_mean']].values
 
-    model = gmm.gmm(n_clusters=3, n_iterations=1)
+    model = gmm.gmm(n_clusters=2, n_iterations=1)
     model.train(X)
     model.plot_contours(X, model.mu, model.sigma, 'Initial clusters')
 
-    model = gmm.gmm(n_clusters=3, n_iterations=50)
+    model = gmm.gmm(n_clusters=2, n_iterations=50, seed=4)
     model.train(X)
     model.plot_contours(X, model.mu, model.sigma, 'Final clusters')
