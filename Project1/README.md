@@ -18,6 +18,23 @@ Use `pip install -r requirements.txt` to install the required packages used in t
 
 Then run `python main.py`.
 
+# Plots
+
+The example attributes chosen for breast cancer dataset are texture mean and radius mean. For red wine dataset, those are fixed acidity and alcohol.
+
+Plotting contours for breast cancer dataset and red wine dataset after running them through the model, we have: 
+
+### Breast Cancer Data
+#### Inital clusters
+![Initial_clusters_breast_cancer](imgs/Initial_clusters_breast_cancer.PNG)
+#### Final clusters
+![Final_clusters_breast_cancer](imgs/Final_clusters_breast_cancer.PNG)
+### Red Wine Data
+#### Inital clusters
+![Initial_clusters_wine_data](imgs/Initial_clusters_wine_data.PNG)
+#### Final clusters
+![Final_clusters_wine_data](imgs/Final_clusters_wine_data.PNG)
+
 # References
 
 https://www.kaggle.com/uciml/breast-cancer-wisconsin-data
