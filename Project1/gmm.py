@@ -63,26 +63,30 @@ class gmm:
         self.responsibility = (likelihood * self.pi) / np.sum(likelihood * self.pi, axis=1, keepdims=True)
         return np.argmax(self.responsibility, axis=1)
 
-    def plot_contours(self, X, mu, sigma, title):
+    def plot_contours(self, X, mu, sigma, x_label='X-axis', y_label='Y-axis', title='GMM contour'):
         x, y = np.meshgrid(np.sort(X[:, 0]), np.sort(X[:, 1]))
         XY = np.array([x.flatten(), y.flatten()]).T
         fig = plt.figure(figsize=(10, 10))
         ax0 = fig.add_subplot(111)
         ax0.scatter(X[:, 0], X[:, 1])
         ax0.set_title(title)
+        if (X >= 0).all() and (X <= 1).all():
+            ax0.set_xlabel(x_label+'_normalized')
+            ax0.set_ylabel(y_label+'_normalized')
+        else:
+            ax0.set_xlabel(x_label)
+            ax0.set_ylabel(y_label)
         col = ['green', 'red', 'magenta', 'indigo', 'black', 'yellow']
         if self.n_clusters <= len(col):
             for i in range(self.n_clusters):
                 ax0.contour(np.sort(X[:, 0]), np.sort(X[:, 1]),
                             multivariate_normal.pdf(XY, mean=mu[i], cov=sigma[i]).reshape(len(X), len(X)), colors=col[i], alpha=0.5)
-                ax0.scatter(mu[0][0], mu[0][1], c='grey', zorder=10, s=100)
-                ax0.scatter(mu[1][0], mu[1][1], c='grey', zorder=10, s=100)
+                ax0.scatter(mu[i][0], mu[i][1], c='grey', zorder=10, s=100)
         else:
             for i in range(self.n_clusters):
                 ax0.contour(np.sort(X[:, 0]), np.sort(X[:, 1]),
                             multivariate_normal.pdf(XY, mean=mu[i], cov=sigma[i]).reshape(len(X), len(X)), colors='black', alpha=0.5)
-                ax0.scatter(mu[0][0], mu[0][1], c='grey', zorder=10, s=100)
-                ax0.scatter(mu[1][0], mu[1][1], c='grey', zorder=10, s=100)
+                ax0.scatter(mu[i][0], mu[i][1], c='grey', zorder=10, s=100)
         plt.show()
 
     @staticmethod
@@ -97,6 +101,8 @@ class gmm:
 
     @staticmethod
     def normalize(X):
+        if isinstance(X, pd.DataFrame):
+            X = X.values
         minmax = gmm.find_minmax(X)
         for row in X:
             for i in range(len(row)):

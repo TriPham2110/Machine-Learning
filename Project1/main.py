@@ -1,7 +1,5 @@
 if __name__ == '__main__':
-    import numpy as np
     from pandas import read_csv
-    from matplotlib import pyplot as plt
     from histogram import histogram
     import gmm
 
@@ -30,16 +28,29 @@ if __name__ == '__main__':
     hist.plot_pdf(bins)
 
     # Breast cancer dataset clustered with two attributes texture mean and radius mean
-    array = dataset1.values
-    X = dataset1[['texture_mean', 'radius_mean']].values
+    X = dataset1[['texture_mean', 'radius_mean']]
 
     model = gmm.gmm(n_clusters=2, n_iterations=1)
 
     normalized_X = model.normalize(X)
 
     model.train(normalized_X)
-    model.plot_contours(normalized_X, model.mu, model.sigma, 'Initial clusters')
+    model.plot_contours(normalized_X, model.mu, model.sigma, x_label=X.columns.values[0], y_label=X.columns.values[1], title='Initial clusters (breast cancer dataset)')
 
     model = gmm.gmm(n_clusters=2, n_iterations=50, seed=4)
     model.train(normalized_X)
-    model.plot_contours(normalized_X, model.mu, model.sigma, 'Final clusters')
+    model.plot_contours(normalized_X, model.mu, model.sigma, x_label=X.columns.values[0], y_label=X.columns.values[1], title='Final clusters (breast cancer dataset)')
+
+    # Red wine quality clustered with two attributes fixed acidity and alcohol
+    X_ = dataset2[['fixed acidity', 'alcohol']]
+
+    model_ = gmm.gmm(n_clusters=3, n_iterations=1)
+
+    normalized_X_ = model_.normalize(X_)
+
+    model_.train(normalized_X_)
+    model_.plot_contours(normalized_X_, model_.mu, model_.sigma, x_label=X_.columns.values[0], y_label=X_.columns.values[1], title='Initial clusters (red wine dataset)')
+
+    model_ = gmm.gmm(n_clusters=3, n_iterations=50, seed=4)
+    model_.train(normalized_X_)
+    model_.plot_contours(normalized_X_, model_.mu, model_.sigma, x_label=X_.columns.values[0], y_label=X_.columns.values[1], title='Final clusters (red wine dataset)')
