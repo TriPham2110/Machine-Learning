@@ -1,6 +1,6 @@
 chose wine and breast dataset; the idea is to cluster the data into their respective quality based on their features; wine can be high, medium, or low quality while breast cancer is either benign or malignant
 
-we will be using gaussian mixture model to mainly carry out this observation; maybe adding expectation maximization
+we will be using gaussian mixture model with expectation maximization algorithm to mainly carry out this observation
 
 learning more about GMM https://www.youtube.com/watch?v=DODphRRL79c
                         https://www.youtube.com/watch?v=qMTuMa86NzU
