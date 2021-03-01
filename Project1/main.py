@@ -3,6 +3,7 @@ if __name__ == '__main__':
     from pandas import read_csv
     from matplotlib import pyplot as plt
     from histogram import histogram
+    import gmm
 
     # Load dataset
     dataset1 = read_csv("data/breast_cancer_wisconsin_diagnostic_data.csv")
@@ -27,3 +28,14 @@ if __name__ == '__main__':
 
     hist.plot_histogram(lower_bounds, histogram_vals, 'quality', 'samples', 'Histogram of wine quality')
     hist.plot_pdf(bins)
+
+    array = dataset1.values
+    X = dataset1[['texture_mean', 'radius_mean']].values
+
+    model = gmm.gmm(n_clusters=3, n_iterations=1)
+    model.train(X)
+    model.plot_contours(X, model.mu, model.sigma, 'Initial clusters')
+
+    model = gmm.gmm(n_clusters=3, n_iterations=50)
+    model.train(X)
+    model.plot_contours(X, model.mu, model.sigma, 'Final clusters')
