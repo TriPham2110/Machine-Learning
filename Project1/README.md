@@ -13,16 +13,22 @@ Start with clusters where each has mean &mu;<sub>c</sub>, covariance &Sigma;<sub
 Start with responsibility r<sub>ic</sub>, update mean &mu;<sub>c</sub>, covariance &Sigma;<sub>c</sub>, and size &pi;<sub>c</sub>. For each cluster, update its parameters (total responsibility, weighted size, weighted mean, and weighted covariance) using the data points. 
 
 The current implementation only takes into account going through a certain number of iterations, so the clusters might not be optimal.
+
 # Compilation
 Use `pip install -r requirements.txt` to install the required packages used in this project.
 
 Then run `python main.py`.
 
+# Results and future directions
+GMM-EM helps cluster the data well into clusters with probability that a data point could belong those clusters. Depending on the height/weight of the gaussian distribution of the clusters, GMM-EM can then predict where a new data point belongs to.
+
+Future directions are adding log likehood to monitor the model's convergence and Principle Component Analysis for dimensionality reduction and identifying more important attributes. 
+
 # Plots
 
 The example attributes chosen for breast cancer dataset are texture mean and radius mean. For red wine dataset, those are fixed acidity and alcohol.
 
-Plotting contours for breast cancer dataset and red wine dataset after running them through the model, we have: 
+Plotting contours and surfaces for breast cancer dataset and red wine dataset after running them through the model, we have: 
 
 ### Breast Cancer Data
 #### Inital clusters
