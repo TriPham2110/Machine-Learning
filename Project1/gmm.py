@@ -6,9 +6,9 @@ Ref: https://www.python-course.eu/expectation_maximization_and_gaussian_mixture_
 """
 
 import numpy as np
-from scipy.stats import multivariate_normal
-from matplotlib import pyplot as plt
 import pandas as pd
+from matplotlib import pyplot as plt
+from scipy.stats import multivariate_normal
 
 
 class gmm:
@@ -71,8 +71,8 @@ class gmm:
         ax0.scatter(X[:, 0], X[:, 1])
         ax0.set_title(title)
         if (X >= 0).all() and (X <= 1).all():
-            ax0.set_xlabel(x_label+'_normalized')
-            ax0.set_ylabel(y_label+'_normalized')
+            ax0.set_xlabel(x_label + '_normalized')
+            ax0.set_ylabel(y_label + '_normalized')
         else:
             ax0.set_xlabel(x_label)
             ax0.set_ylabel(y_label)
@@ -80,30 +80,57 @@ class gmm:
         if self.n_clusters <= len(col):
             for i in range(self.n_clusters):
                 ax0.contour(np.sort(X[:, 0]), np.sort(X[:, 1]),
-                            multivariate_normal.pdf(XY, mean=mu[i], cov=sigma[i]).reshape(len(X), len(X)), colors=col[i], alpha=0.5)
+                            multivariate_normal.pdf(XY, mean=mu[i], cov=sigma[i]).reshape(len(X), len(X)),
+                            colors=col[i], alpha=0.5)
                 ax0.scatter(mu[i][0], mu[i][1], c='grey', zorder=10, s=100)
         else:
             for i in range(self.n_clusters):
                 ax0.contour(np.sort(X[:, 0]), np.sort(X[:, 1]),
-                            multivariate_normal.pdf(XY, mean=mu[i], cov=sigma[i]).reshape(len(X), len(X)), colors='black', alpha=0.5)
+                            multivariate_normal.pdf(XY, mean=mu[i], cov=sigma[i]).reshape(len(X), len(X)),
+                            colors='black', alpha=0.5)
                 ax0.scatter(mu[i][0], mu[i][1], c='grey', zorder=10, s=100)
         plt.show()
 
-    @staticmethod
-    def find_minmax(X):
-        minmax = []
-        for i in range(len(X[0])):
-            col_values = [row[i] for row in X]
-            value_min = min(col_values)
-            value_max = max(col_values)
-            minmax.append([value_min, value_max])
-        return minmax
+    def plot_distribution(self, X, mu, sigma, x_label='X-axis', y_label='Y-axis', title='GMM distribution'):
+        x, y = np.meshgrid(np.sort(X[:, 0]), np.sort(X[:, 1]))
+
+        pos = np.empty(x.shape + (2,))
+        pos[:, :, 0] = x
+        pos[:, :, 1] = y
+
+        fig = plt.figure(figsize=(10, 10))
+        ax = fig.gca(projection='3d')
+
+        if (X >= 0).all() and (X <= 1).all():
+            ax.set_xlabel(x_label + '_normalized')
+            ax.set_ylabel(y_label + '_normalized')
+        else:
+            ax.set_xlabel(x_label)
+            ax.set_ylabel(y_label)
+        ax.set_zlabel('PDF')
+
+        if self.n_clusters <= 3:
+            for i in range(self.n_clusters):
+                rv = multivariate_normal(mu[i], sigma[i])
+                ax.plot_surface(x, y, rv.pdf(pos), cmap='coolwarm', linewidth=1, antialiased=True)
+        else:
+            print('Limit number of gaussian distributions to 3')
+
+        ax.set_title(title)
+        plt.show()
 
     @staticmethod
     def normalize(X):
         if isinstance(X, pd.DataFrame):
             X = X.values
-        minmax = gmm.find_minmax(X)
+
+        minmax = []
+        for i in range(len(X[0])):
+            col_values = [row[i] for row in X]
+            min = np.min(col_values)
+            max = np.max(col_values)
+            minmax.append([min, max])
+
         for row in X:
             for i in range(len(row)):
                 row[i] = (row[i] - minmax[i][0]) / (minmax[i][1] - minmax[i][0])

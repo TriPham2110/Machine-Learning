@@ -14,3 +14,5 @@ observing dataset with different pandas techniques (unique, isin)
 added plotting for histogram and density estimation
 
 added gaussian mixture model and contour plotting
+
+added surface plot for gaussian distribution

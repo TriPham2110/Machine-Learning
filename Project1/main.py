@@ -21,36 +21,48 @@ if __name__ == '__main__':
         print(np.sum(dataset2['quality'] == i))
     """
     hist = histogram(dataset2['quality'])
-    bins = len(dataset2['quality'].unique())-1
+    bins = len(dataset2['quality'].unique()) - 1
     lower_bounds, histogram_vals = hist.make_histogram(bins)
 
     hist.plot_histogram(lower_bounds, histogram_vals, 'quality', 'samples', 'Histogram of wine quality')
-    hist.plot_pdf(bins)
+    hist.plot_distribution(bins, x_label='quality')
 
     # Breast cancer dataset clustered with two attributes texture mean and radius mean
-    X = dataset1[['texture_mean', 'radius_mean']]
+    X1 = dataset1[['texture_mean', 'radius_mean']]
 
-    model = gmm.gmm(n_clusters=2, n_iterations=1)
+    model1 = gmm.gmm(n_clusters=2, n_iterations=1)
 
-    normalized_X = model.normalize(X)
+    normalized_X1 = model1.normalize(X1)
 
-    model.train(normalized_X)
-    model.plot_contours(normalized_X, model.mu, model.sigma, x_label=X.columns.values[0], y_label=X.columns.values[1], title='Initial clusters (breast cancer dataset)')
+    model1.train(normalized_X1)
+    model1.plot_contours(normalized_X1, model1.mu, model1.sigma, x_label=X1.columns.values[0], y_label=X1.columns.values[1],
+                        title='Initial clusters (breast cancer dataset)')
 
-    model = gmm.gmm(n_clusters=2, n_iterations=50, seed=4)
-    model.train(normalized_X)
-    model.plot_contours(normalized_X, model.mu, model.sigma, x_label=X.columns.values[0], y_label=X.columns.values[1], title='Final clusters (breast cancer dataset)')
+    model1 = gmm.gmm(n_clusters=2, n_iterations=50, seed=4)
+    model1.train(normalized_X1)
+    model1.plot_contours(normalized_X1, model1.mu, model1.sigma, x_label=X1.columns.values[0], y_label=X1.columns.values[1],
+                        title='Final clusters (breast cancer dataset)')
+
+    model1.plot_distribution(normalized_X1, model1.mu, model1.sigma, x_label=X1.columns.values[0],
+                            y_label=X1.columns.values[1],
+                            title='GMM distribution for final clusters (breast cancer dataset)')
 
     # Red wine quality clustered with two attributes fixed acidity and alcohol
-    X_ = dataset2[['fixed acidity', 'alcohol']]
+    X2 = dataset2[['fixed acidity', 'alcohol']]
 
-    model_ = gmm.gmm(n_clusters=3, n_iterations=1)
+    model2 = gmm.gmm(n_clusters=3, n_iterations=1)
 
-    normalized_X_ = model_.normalize(X_)
+    normalized_X2 = model2.normalize(X2)
 
-    model_.train(normalized_X_)
-    model_.plot_contours(normalized_X_, model_.mu, model_.sigma, x_label=X_.columns.values[0], y_label=X_.columns.values[1], title='Initial clusters (red wine dataset)')
+    model2.train(normalized_X2)
+    model2.plot_contours(normalized_X2, model2.mu, model2.sigma, x_label=X2.columns.values[0],
+                         y_label=X2.columns.values[1], title='Initial clusters (red wine dataset)')
 
-    model_ = gmm.gmm(n_clusters=3, n_iterations=50, seed=4)
-    model_.train(normalized_X_)
-    model_.plot_contours(normalized_X_, model_.mu, model_.sigma, x_label=X_.columns.values[0], y_label=X_.columns.values[1], title='Final clusters (red wine dataset)')
+    model2 = gmm.gmm(n_clusters=3, n_iterations=50, seed=4)
+    model2.train(normalized_X2)
+    model2.plot_contours(normalized_X2, model2.mu, model2.sigma, x_label=X2.columns.values[0],
+                         y_label=X2.columns.values[1], title='Final clusters (red wine dataset)')
+
+    # model2.plot_distribution(normalized_X2, model2.mu, model2.sigma, x_label=X2.columns.values[0],
+    #                          y_label=X2.columns.values[1],
+    #                          title='GMM distribution for final clusters (red wine dataset)')

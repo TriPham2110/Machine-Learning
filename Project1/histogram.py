@@ -3,8 +3,8 @@ Ref: https://realpython.com/python-histograms/
      https://stackoverflow.com/questions/21619347/creating-a-python-histogram-without-pylab
      https://stackoverflow.com/questions/20011122/fitting-a-normal-distribution-to-1d-data
 """
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
 from scipy.stats import norm
 
 
@@ -24,7 +24,7 @@ class histogram:
         plt.show()
 
     def make_histogram(self, bins, min_value=None, max_value=None):
-        histogram_values = np.zeros(bins+1)
+        histogram_values = np.zeros(bins + 1)
         if min_value is None:
             min_value = min(self.list)
         if max_value is None:
@@ -33,17 +33,19 @@ class histogram:
         for value in self.list:
             bin_index = int(bins * ((value - min_value) / (max_value - min_value)))
             histogram_values[bin_index] += 1
-        bin_lower_bounds = [min_value + i * (max_value - min_value) / len(histogram_values) for i in range(len(histogram_values))]
+        bin_lower_bounds = [min_value + i * (max_value - min_value) / len(histogram_values) for i in
+                            range(len(histogram_values))]
 
         return bin_lower_bounds, histogram_values
 
-    def plot_pdf(self, bins):
+    def plot_distribution(self, bins, x_label='X-axis', title='Distribution results'):
         plt.hist(self.list, bins=bins, density=True, edgecolor='black')
         xmin, xmax = plt.xlim()
         x = np.linspace(xmin, xmax, 100)
         mu, sigma = norm.fit(self.list)
         p = norm.pdf(x, mu, sigma)
         plt.plot(x, p, 'k', linewidth=2)
-        title = "Fit results: mu = %.2f,  std = %.2f" % (mu, sigma)
+        title = "Distribution results" + " of " + x_label + ": mu = %.2f,  std = %.2f" % (mu, sigma)
         plt.title(title)
+        plt.xlabel(x_label)
         plt.show()

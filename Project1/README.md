@@ -29,11 +29,15 @@ Plotting contours for breast cancer dataset and red wine dataset after running t
 ![Initial_clusters_breast_cancer](imgs/Initial_clusters_breast_cancer.PNG)
 #### Final clusters
 ![Final_clusters_breast_cancer](imgs/Final_clusters_breast_cancer.PNG)
+#### Gaussian distributions
+![GMM_distribution_final_clusters_breast_cancer](imgs/GMM_distribution_final_clusters_breast_cancer.PNG)
 ### Red Wine Data
 #### Inital clusters
 ![Initial_clusters_wine_data](imgs/Initial_clusters_wine_data.PNG)
 #### Final clusters
 ![Final_clusters_wine_data](imgs/Final_clusters_wine_data.PNG)
+#### Gaussian distributions
+![GMM_distribution_final_clusters_wine_data](imgs/GMM_distribution_final_clusters_wine_data.PNG)
 
 # References
 
