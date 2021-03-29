@@ -181,8 +181,8 @@ class hmm:
         generated_seq = ''
         cur_state = start_state
         for i in range(num):
-            generated_seq = generated_seq + np.random.choice(list(self.emissions[cur_state].keys()), p=list(self.emissions[cur_state].values()))
-            generated_seq = generated_seq + ' '
+            selected_token = np.random.choice(list(self.emissions[cur_state].keys()), p=list(self.emissions[cur_state].values()))
+            generated_seq = generated_seq + selected_token + ' '
             cur_state = np.random.choice(range(self.num_hidden_states), p=self.transitions[cur_state])
         print(generated_seq)
 
@@ -216,6 +216,6 @@ class hmm:
         generated_seq = ''
         for i in range(num):
             cur_state = np.random.choice(range(self.num_hidden_states), p=self.transitions[cur_state])
-            generated_seq = generated_seq + np.random.choice(list(self.emissions[cur_state].keys()), p=list(self.emissions[cur_state].values()))
-            generated_seq = generated_seq + ' '
+            selected_token = np.random.choice(list(self.emissions[cur_state].keys()), p=list(self.emissions[cur_state].values()))
+            generated_seq = generated_seq + selected_token + ' '
         print(text_line + ' ' + generated_seq)
