@@ -1,8 +1,8 @@
 """
-https://en.wikipedia.org/wiki/Baum–Welch_algorithm
 https://medium.com/analytics-vidhya/hidden-markov-model-part-1-of-the-hmm-series-3f7fea28a08
 https://medium.com/analytics-vidhya/baum-welch-algorithm-for-training-a-hidden-markov-model-part-2-of-the-hmm-series-d0e393b4fb86
 https://medium.com/analytics-vidhya/viterbi-algorithm-for-prediction-with-hmm-part-3-of-the-hmm-series-6466ce2f5dc6
+https://en.wikipedia.org/wiki/Baum–Welch_algorithm
 https://en.wikipedia.org/wiki/Viterbi_algorithm
 """
 import numpy as np
@@ -202,17 +202,17 @@ class hmm:
                     T1[i][j] = np.max(T1[:, j-1] * self.transitions[i] * self.emissions[i][seq[j]])
                     T2[i][j] = np.argmax(T1[:, j-1] * self.transitions[i] * self.emissions[i][seq[j]])
 
-        zT = np.zeros(len(seq))
-        xT = np.zeros(len(seq))
+        z = np.zeros(len(seq))
+        x = np.zeros(len(seq))
 
-        zT[len(seq)-1] = np.argmax(T1[:, -1])
-        xT[len(seq)-1] = zT[len(seq)-1]
+        z[len(seq)-1] = np.argmax(T1[:, -1])
+        x[len(seq)-1] = z[len(seq)-1]
 
         for j in range(len(seq)-1, 0, -1):
-            zT[j-1] = T2[int(zT[j]), j]
-            xT[j-1] = zT[j-1]
+            z[j-1] = T2[int(z[j]), j]
+            x[j-1] = z[j-1]
 
-        cur_state = int(xT[len(seq)-1])
+        cur_state = int(x[len(seq)-1])
         generated_seq = ''
         for i in range(num):
             cur_state = np.random.choice(range(self.num_hidden_states), p=self.transitions[cur_state])
