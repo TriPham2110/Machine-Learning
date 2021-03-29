@@ -3,6 +3,7 @@ if __name__ == '__main__':
     import pandas as pd
     import numpy as np
     import string, os
+    import pickle
 
     dataset = read_csv("data/Shakespeare_data.csv")
     dataset.dropna(axis="columns", how="any", inplace=True)
@@ -19,7 +20,11 @@ if __name__ == '__main__':
     corpus = [clean_text(x) for x in all_lines]
 
     from hmm import hmm
-    model = hmm(num_hidden_states=5, max_iter=2)
-    model.train_model(corpus)
+    transitions, emissions, pi = hmm.load('train.pickle')
+    model = hmm(num_hidden_states=5, transitions=transitions, emissions=emissions, pi=pi)
+    model.generate(15)
 
-    print("hello")
+    model.predict("i love you", 5)
+
+    # model = hmm(num_hidden_states=5, max_iter=15)
+    # model.train_model(corpus, filename='train')
