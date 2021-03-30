@@ -21,14 +21,15 @@ if __name__ == '__main__':
         corpus = [clean_text(x) for x in all_lines]
 
         # For training
-        # model = hmm(num_hidden_states=5, max_iter=20)
-        # model.train_model(corpus, filename='train_5_states_20_iters')
+        # model = hmm(num_hidden_states=5, max_iter=25)
+        # model.train_model(corpus, filename='train')
 
-        transitions, emissions, pi = hmm.load('train.pickle')
+        transitions, emissions, pi = hmm.load('train_1.pickle')
 
         option = None
 
-        model = hmm(num_hidden_states=5, transitions=transitions, emissions=emissions, pi=pi)
+        # update num_hidden_states according to your trained model
+        model = hmm(num_hidden_states=6, transitions=transitions, emissions=emissions, pi=pi)
 
         while option != '3':
             print("Select your option:")

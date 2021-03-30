@@ -34,11 +34,11 @@ This project has been trained, saved as a pickle file, and reused to perform the
 
 # Results and future directions
 
-![5_state_2_iters](imgs/5_states_2_iters.PNG)
+![6_states_20_iters](imgs/6_states_20_iters.PNG)
 
 Because of the complexity of the model and limitation of computational resources, the texts generated or predicted still have a hard time producing the most sensible sequence.
 
-Future directions would be to test it with smaller corpus as well as different corpi to observe different behaviors. It is also ideal to train the model on a more powerful machine as well as making use of a high performance package (e.g. Numba).
+Future directions would be to test it with smaller corpus as well as different corpi to observe different behaviors. It is also ideal to train the model on a more powerful machine as well as making use of a high performance package (e.g. Numba). Also, it would be good to look into what number of hidden states is usually set as.
 
 # References
 
