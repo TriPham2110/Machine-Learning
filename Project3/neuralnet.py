@@ -48,16 +48,16 @@ class NeuralNet:
         self.activations[-1] = NeuralNet.sigmoid((self.activations[-2].dot(self.weights[-1])) + self.biases[-1])
 
     def backward_propagation(self):
-        errors = [(self.y - self.activations[-1]) * NeuralNet.sigmoid_derivative(self.activations[-1])]
+        errors = [-(self.activations[-1] - self.y) * NeuralNet.sigmoid_derivative(self.activations[-1])]
         for i in range(len(self.hidden_layers), 0, -1):
             errors.append((errors[-1].dot(self.weights[i].T)) * NeuralNet.sigmoid_derivative(self.activations[i - 1]))
         for i in range(len(self.weights)):
             if i == 0:
                 layer = self.X
-                error = errors[-1]
+                error = errors[len(errors) - 1]
             else:
                 layer = self.activations[i - 1]
-                error = errors[i - 1]
+                error = errors[(len(errors) - 1) - i]
             self.weights[i] += self.learning_rate * (layer.T.dot(error))
             for e in error:
                 self.biases[i] += self.learning_rate * e
@@ -70,11 +70,13 @@ class NeuralNet:
             self.backward_propagation()
 
     def predict(self, X):
-        activations = [None] * (len(self.hidden_layers) + 1)
-        activations[0] = NeuralNet.sigmoid(X.dot(self.weights[0]) + self.biases[0])
-        for i in range(len(self.hidden_layers) - 1):
-            activations[i + 1] = NeuralNet.sigmoid((activations[i].dot(self.weights[i + 1])) + self.biases[i + 1])
-        activations[-1] = NeuralNet.sigmoid((activations[-2].dot(self.weights[-1])) + self.biases[-1])
-        prediction = np.argmax(activations[-1])
-        return prediction
+        predictions = []
+        for i in range(len(X)):
+            activations = [None] * (len(self.hidden_layers) + 1)
+            activations[0] = NeuralNet.sigmoid(X[i].dot(self.weights[0]) + self.biases[0])
+            for j in range(len(self.hidden_layers) - 1):
+                activations[j + 1] = NeuralNet.sigmoid((activations[j].dot(self.weights[j + 1])) + self.biases[j + 1])
+            activations[-1] = NeuralNet.sigmoid((activations[-2].dot(self.weights[-1])) + self.biases[-1])
+            predictions.append(int(np.round(activations[-1])[0]))
+        return np.array(predictions)
 
