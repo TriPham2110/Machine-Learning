@@ -1,4 +1,7 @@
 import numpy as np
+import pickle
+from sklearn.preprocessing import StandardScaler
+import pandas as pd
 
 
 class NeuralNet:
@@ -62,14 +65,30 @@ class NeuralNet:
             for e in error:
                 self.biases[i] += self.learning_rate * e
 
+    def save(self, file):
+        with open(file+'.pickle', 'wb') as f:
+            pickle.dump((self.weights, self.biases), f)
+
+    @staticmethod
+    def load(filename):
+        with open(filename, 'rb') as f:
+            return pickle.load(f)
+
+    @staticmethod
+    def normalize(X):
+        if isinstance(X, pd.DataFrame):
+            X = X.values
+        return StandardScaler().fit_transform(X)
+
     def train(self, X, y):
-        self.X = X
+        self.X = NeuralNet.normalize(X)
         self.y = y
         for i in range(self.iterations):
             self.forward_propagation()
             self.backward_propagation()
 
     def predict(self, X):
+        X = NeuralNet.normalize(X)
         predictions = []
         for i in range(len(X)):
             activations = [None] * (len(self.hidden_layers) + 1)
