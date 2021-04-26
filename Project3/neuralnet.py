@@ -106,9 +106,9 @@ class NeuralNet:
             predictions.append(activations[-1][0])
         return np.round(predictions)
 
-    def plot_loss(self):
+    def plot_loss(self, title):
         plt.plot(self.loss)
         plt.xlabel("Iteration")
         plt.ylabel("logloss")
-        plt.title("Loss curve for training")
+        plt.title(title + ": Loss curve for training")
         plt.show()
