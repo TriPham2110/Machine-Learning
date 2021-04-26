@@ -29,4 +29,19 @@ class NeuralNet:
         self.y = None
         self.activations = [None] * (len(self.hidden_layers) + 1)
 
+    @staticmethod
+    def sigmoid(Z):
+        return 1 / (1 + np.exp(-Z))
 
+    @staticmethod
+    def sigmoid_derivative(Z):
+        s = NeuralNet.sigmoid(Z)
+        return s * (1 - s)
+
+    def forward_propagation(self):
+        self.activations[0] = NeuralNet.sigmoid(self.X.dot(self.weights[0]) + self.biases[0])
+        for i in range(len(self.hidden_layers) - 1):
+            self.activations[i + 1] = NeuralNet.sigmoid(self.activations[i].dot(self.weights[i + 1]) + self.biases[i + 1])
+        self.activations[-1] = NeuralNet.sigmoid(self.activations[-2].dot(self.weights[-1]) + self.biases[-1])
+
+    
