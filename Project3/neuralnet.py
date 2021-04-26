@@ -2,6 +2,7 @@ import numpy as np
 import pickle
 from sklearn.preprocessing import StandardScaler
 import pandas as pd
+import matplotlib.pyplot as plt
 
 
 class NeuralNet:
@@ -18,6 +19,7 @@ class NeuralNet:
         self.weights = []
         self.biases = []
 
+        np.random.seed(42)
         for i in range(len(self.hidden_layers) + 1):
             if i == 0:
                 self.weights.append(np.random.randn(self.num_input_nodes, self.hidden_layers[0]))
@@ -33,6 +35,7 @@ class NeuralNet:
         self.X = None
         self.y = None
         self.activations = [None] * (len(self.hidden_layers) + 1)
+        self.loss = []
 
     @staticmethod
     def sigmoid(Z):
@@ -49,6 +52,9 @@ class NeuralNet:
             self.activations[i + 1] = NeuralNet.sigmoid(
                 (self.activations[i].dot(self.weights[i + 1])) + self.biases[i + 1])
         self.activations[-1] = NeuralNet.sigmoid((self.activations[-2].dot(self.weights[-1])) + self.biases[-1])
+        loss = (-1 / len(self.y)) * (np.sum(
+            np.multiply(np.log(self.activations[-1][0]), self.y) + np.multiply((1.0 - self.y), np.log(1.0 - self.activations[-1][0]))))
+        return loss
 
     def backward_propagation(self):
         errors = [-(self.activations[-1] - self.y) * NeuralNet.sigmoid_derivative(self.activations[-1])]
@@ -84,8 +90,9 @@ class NeuralNet:
         self.X = NeuralNet.normalize(X)
         self.y = y
         for i in range(self.iterations):
-            self.forward_propagation()
+            loss = self.forward_propagation()
             self.backward_propagation()
+            self.loss.append(loss)
 
     def predict(self, X):
         X = NeuralNet.normalize(X)
@@ -96,6 +103,12 @@ class NeuralNet:
             for j in range(len(self.hidden_layers) - 1):
                 activations[j + 1] = NeuralNet.sigmoid((activations[j].dot(self.weights[j + 1])) + self.biases[j + 1])
             activations[-1] = NeuralNet.sigmoid((activations[-2].dot(self.weights[-1])) + self.biases[-1])
-            predictions.append(int(np.round(activations[-1])[0]))
-        return np.array(predictions)
+            predictions.append(activations[-1][0])
+        return np.round(predictions)
 
+    def plot_loss(self):
+        plt.plot(self.loss)
+        plt.xlabel("Iteration")
+        plt.ylabel("logloss")
+        plt.title("Loss curve for training")
+        plt.show()

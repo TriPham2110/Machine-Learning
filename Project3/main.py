@@ -6,6 +6,7 @@ from neuralnet import NeuralNet
 import logging
 import traceback
 from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score
 
 if __name__ == '__main__':
     try:
@@ -21,15 +22,18 @@ if __name__ == '__main__':
 
         X = dataset.drop(columns=['heart_disease'])
         y = dataset['heart_disease'].values.reshape(X.shape[0], 1)
-        Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.2, random_state=2)
+        Xtrain, Xtest, ytrain, ytest = train_test_split(X, y, test_size=0.2, random_state=0)
 
-        neuralnet = NeuralNet(num_input_nodes=13, num_output_nodes=1, hidden_layers=[10, 10], learning_rate=0.1)
+        neuralnet = NeuralNet(num_input_nodes=13, num_output_nodes=1, hidden_layers=[10, 10], learning_rate=0.01)
         neuralnet.train(Xtrain, ytrain)
 
+        train_pred = neuralnet.predict(Xtrain)
         test_pred = neuralnet.predict(Xtest)
 
-        print(ytest.reshape(-1,))
-        print(test_pred)
+        print(accuracy_score(ytrain.reshape(-1,), train_pred))
+        print(accuracy_score(ytest.reshape(-1,), test_pred))
+
+        neuralnet.plot_loss()
 
     except Exception as e:
         logging.error(traceback.format_exc())
