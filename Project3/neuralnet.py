@@ -1,8 +1,9 @@
-import numpy as np
 import pickle
-from sklearn.preprocessing import StandardScaler
-import pandas as pd
+
 import matplotlib.pyplot as plt
+import numpy as np
+import pandas as pd
+from sklearn.preprocessing import StandardScaler
 
 
 class NeuralNet:
@@ -23,14 +24,14 @@ class NeuralNet:
         for i in range(len(self.hidden_layers) + 1):
             if i == 0:
                 self.weights.append(np.random.randn(self.num_input_nodes, self.hidden_layers[0]))
-                self.biases.append(np.random.rand(self.hidden_layers[0],))
+                self.biases.append(np.random.rand(self.hidden_layers[0], ))
             elif i < len(self.hidden_layers):
                 self.weights.append(np.random.randn(self.hidden_layers[i - 1], self.hidden_layers[i]))
-                self.biases.append(np.random.rand(self.hidden_layers[i],))
+                self.biases.append(np.random.rand(self.hidden_layers[i], ))
             else:
                 self.weights.append(np.random.randn(self.hidden_layers[len(self.hidden_layers) - 1],
                                                     self.num_output_nodes))
-                self.biases.append(np.random.randn(self.num_output_nodes,))
+                self.biases.append(np.random.randn(self.num_output_nodes, ))
 
         self.X = None
         self.y = None
@@ -53,7 +54,8 @@ class NeuralNet:
                 (self.activations[i].dot(self.weights[i + 1])) + self.biases[i + 1])
         self.activations[-1] = NeuralNet.sigmoid((self.activations[-2].dot(self.weights[-1])) + self.biases[-1])
         loss = (-1 / len(self.y)) * (np.sum(
-            np.multiply(np.log(self.activations[-1][0]), self.y) + np.multiply((1.0 - self.y), np.log(1.0 - self.activations[-1][0]))))
+            np.multiply(np.log(self.activations[-1][0]), self.y) + np.multiply((1.0 - self.y),
+                                                                               np.log(1.0 - self.activations[-1][0]))))
         return loss
 
     def backward_propagation(self):
@@ -72,7 +74,7 @@ class NeuralNet:
                 self.biases[i] += self.learning_rate * e
 
     def save(self, file):
-        with open(file+'.pickle', 'wb') as f:
+        with open(file + '.pickle', 'wb') as f:
             pickle.dump((self.weights, self.biases), f)
 
     @staticmethod

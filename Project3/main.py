@@ -1,10 +1,13 @@
-import pandas as pd
-from neuralnet import NeuralNet
 import logging
 import traceback
-from sklearn.model_selection import train_test_split
-from sklearn.metrics import accuracy_score
 import warnings
+
+import pandas as pd
+from sklearn.metrics import accuracy_score
+from sklearn.model_selection import train_test_split
+
+from neuralnet import NeuralNet
+
 warnings.filterwarnings("ignore")
 
 if __name__ == '__main__':
