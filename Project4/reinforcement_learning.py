@@ -1,6 +1,7 @@
 """
 Ref: https://blog.floydhub.com/an-introduction-to-q-learning-reinforcement-learning/
      https://tcnguyen.github.io/reinforcement_learning/sarsa_vs_q_learning.html
+     https://heartbeat.fritz.ai/introduction-to-reinforcement-learning-a91beec7f830
 """
 import numpy as np
 
