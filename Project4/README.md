@@ -27,7 +27,7 @@ The graph below demonstrates the relationship between the rooms and the exit.
 The goal for the agent is to exit the building (numbered 5) given any start location. 
 The results from both Q-learning and SARSA are included below.
 
-![graph](imgs/example_graph.PNG)
+![graph](imgs/example_graph.png)
 
 ![result](imgs/result.PNG)
 
